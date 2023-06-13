@@ -2,7 +2,22 @@ import Drink from "../assets/Drink.jpeg";
 import ever01 from "../assets/ever01.jpg";
 import ever02 from "../assets/ever02.jpg";
 
+import { useState } from "react";
+
 export default function Product() {
+  const [input, setInput] = useState({
+    quantity: "1",
+  });
+
+  const handleOnClickIncrease = () => {
+    setInput({ ...input, quantity: +input.quantity + 1 });
+  };
+
+  const handleOnClickDecrease = () => {
+    if (input.quantity > 0) {
+      setInput({ ...input, quantity: +input.quantity - 1 });
+    }
+  };
   return (
     <div>
       {/* Product */}
@@ -45,6 +60,7 @@ export default function Product() {
                   <button
                     type="button"
                     className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
+                    onClick={handleOnClickDecrease}
                   >
                     &minus;
                   </button>
@@ -59,6 +75,7 @@ export default function Product() {
                   <button
                     type="button"
                     className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
+                    onClick={handleOnClickIncrease}
                   >
                     +
                   </button>

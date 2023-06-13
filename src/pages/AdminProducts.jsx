@@ -1,10 +1,32 @@
-import drink from "../assets/Drink.jpeg";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import CardFormAdmin from "../components/layouts/CardFormAdmin";
+import { getAllProduct } from "../api/authApi";
 
 export default function AdminProducts() {
+  const [product, setProduct] = useState([]);
+
+  const Cards = product.map((product) => (
+    <CardFormAdmin
+      key={product.id}
+      id={product.id}
+      productName={product.productName}
+      price={product.price}
+      description={product.description}
+      quantity={product.quantity}
+    />
+  ));
+
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    getAllProduct(token).then((rs) => {
+      setProduct(rs.data);
+    });
+  }, []);
+
   return (
-    <div className="bg-white">
-      <div className="w-full h-screen">
+    <div className="bg-white ">
+      <div className="w-full">
         <div className="px-16 py-12">
           {/* Header */}
           <h1 className="border-b border-gray-400 text-3xl font-medium text-graynav pb-3">
@@ -78,6 +100,9 @@ export default function AdminProducts() {
 
             {/* Card */}
             <div className="w-full bg-transparent px-20 py-16 grid grid-flow-row grid-cols-3 gap-11 pb-16 ">
+              {Cards}
+            </div>
+            {/* <div className="w-full bg-transparent px-20 py-16 grid grid-flow-row grid-cols-3 gap-11 pb-16 ">
               <div className="w-80 ">
                 <div className="w-80 relative">
                   <a href="#" className="">
@@ -110,7 +135,7 @@ export default function AdminProducts() {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ export default function AuthContextProvider(props) {
   useEffect(() => {
     let token = localStorage.getItem("token");
     if (!token) return;
-    getMe().then((rs) => {
+    getMe(token).then((rs) => {
       setUser(rs.data);
     });
   }, []);

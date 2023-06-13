@@ -33,7 +33,7 @@ export default function Login() {
       .then((rs) => {
         // console.log(rs.data)
         setUser(rs.data);
-        navigate("/homepage");
+        navigate("/");
       })
       .catch((err) => alert(err.response.data.error || err.message));
   };

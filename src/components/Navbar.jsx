@@ -9,14 +9,15 @@ export default function Navbar() {
 
   const hdlLogout = () => {
     logout();
-    navigate("/homepage");
+    navigate("/");
   };
+
   return (
     <>
       {!user ? (
         <div className="navbar bg-graynav text-textnav ">
           <div className="navbar-start">
-            <Link to="/homepage" className="btn btn-ghost normal-case text-xl">
+            <Link to="/" className="btn btn-ghost normal-case text-xl">
               Pet Selected.
             </Link>
           </div>
@@ -45,7 +46,7 @@ export default function Navbar() {
       ) : (
         <div className="navbar bg-graynav text-textnav ">
           <div className="navbar-start">
-            <Link to="/homepage" className="btn btn-ghost normal-case text-xl">
+            <Link to="/" className="btn btn-ghost normal-case text-xl">
               Pet Selected.
             </Link>
           </div>
@@ -72,23 +73,22 @@ export default function Navbar() {
               </label>
               <ul
                 tabIndex={0}
-                className="dropdown-content menu p-2 shadow-sm bg-white border-none rounded-box w-52 z-50"
+                className="dropdown-content menu p-2 shadow-sm bg-white border-none rounded-box w-64 z-50"
               >
-                <div className="flex flex-row text-graynav justify-center items-center gap-5 mb-3 mt-1">
+                <div className="flex flex-row text-graynav justify-start items-center gap-5 mb-3 mt-1 pl-4">
                   <i className="fa-regular fa-circle-user fa-2xl"></i>
                   <div className="flex flex-col">
-                    <h1>Name</h1>
-                    <p>email@mail.com</p>
+                    <h1>
+                      {user.firstName} {user.lastName}
+                    </h1>
+                    <p>{user.email}</p>
                   </div>
                 </div>
                 <hr />
-                <li className="text-graynav mt-2">
+                <li className="text-graynav mt-2 " onClick={hdlLogout}>
                   <a>
                     Sign out
-                    <i
-                      className="fa-solid fa-arrow-right-from-bracket"
-                      onClick={hdlLogout}
-                    ></i>
+                    <i className="fa-solid fa-arrow-right-from-bracket"></i>
                   </a>
                 </li>
               </ul>
@@ -131,7 +131,7 @@ export default function Navbar() {
                             <div className="bg-white border border-gray-400 px-4 py-1 rounded-md text-graynav font-normal text-sm text-center">
                               1
                             </div>
-                            <p className="text-xs mt-1 underline text-gray-500 cursor-pointer">
+                            <p className="text-xs mt-1 underline text-gray-500 cursor-pointer hover:text-graynav">
                               Remove
                             </p>
                           </div>

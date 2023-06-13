@@ -25,7 +25,7 @@ export default function HomePage() {
               industry.
             </p>
             <Link to="/product">
-              <button className="btn btn-active mt-10 rounded-full text-white">
+              <button className="btn btn-active mt-10 rounded-full text-white  hover:bg-white hover:text-graynav hover:border hover:border-black">
                 shop now
               </button>
             </Link>
@@ -43,7 +43,7 @@ export default function HomePage() {
               industry.
             </p>
             <Link to="/product">
-              <button className="btn btn-active mt-10 rounded-full text-white">
+              <button className="btn btn-active mt-10 rounded-full text-white  hover:bg-white hover:text-graynav hover:border hover:border-black">
                 shop now
               </button>
             </Link>
@@ -61,7 +61,7 @@ export default function HomePage() {
               industry.
             </p>
             <Link to="/product">
-              <button className="btn btn-active mt-10 rounded-full text-white">
+              <button className="btn btn-active mt-10 rounded-full text-white  hover:bg-white hover:text-graynav hover:border hover:border-black">
                 shop now
               </button>
             </Link>
@@ -82,13 +82,16 @@ export default function HomePage() {
       </div>
 
       {/* Collection list */}
-      <div className="max-w-[78rem] mx-auto flex flex-col mb-8">
+      <div className="max-w-[78rem] mx-auto flex flex-col mb-14">
         <h1 className="text-4xl font-semibold text-graynav mt-11">
           Collection List
         </h1>
         <div className="flex justify-center items-center mt-12">
           <div className="grid grid-flow-row grid-cols-3 gap-11 max-w-screen-xl">
-            <Link to="/shop" className="w-96 text-graynav border-none">
+            <Link
+              to="/shop"
+              className="w-96 text-graynav border-none hover:scale-105 duration-500"
+            >
               <div className="bg-white flex flex-col justify-center items-center text-center rounded-t-xl p-5">
                 <h1 className="text-3xl font-medium rounded-b-xl pt-4">All</h1>
                 <p className="w-60 pt-2 text-xs font-light">
@@ -98,7 +101,10 @@ export default function HomePage() {
               </div>
               <img src={all} className="rounded-b-xl" />
             </Link>
-            <Link to="/shop" className="w-96 text-graynav border-none">
+            <Link
+              to="/shop"
+              className="w-96 text-graynav border-none hover:scale-105 duration-500"
+            >
               <div className="bg-white flex flex-col justify-center items-center text-center rounded-t-xl p-5">
                 <h1 className="text-3xl font-medium rounded-b-xl pt-4">
                   Clean
@@ -110,7 +116,10 @@ export default function HomePage() {
               </div>
               <img src={clean} className="rounded-b-xl w-96 h-96 object-none" />
             </Link>
-            <Link to="/shop" className="w-96 text-graynav border-none">
+            <Link
+              to="/shop"
+              className="w-96 text-graynav border-none hover:scale-105 duration-500"
+            >
               <div className="bg-white flex flex-col justify-center items-center text-center rounded-t-xl p-5">
                 <h1 className="text-3xl font-medium rounded-b-xl pt-4">Feed</h1>
                 <p className="w-60 pt-2 text-xs font-light">
@@ -120,19 +129,25 @@ export default function HomePage() {
               </div>
               <img src={feed} className="rounded-b-xl" />
             </Link>
-            <Link to="/shop" className="w-96 text-graynav border-none">
+            <Link
+              to="/shop"
+              className="w-96 text-graynav border-none hover:scale-105 duration-500"
+            >
               <div className="bg-white flex flex-col justify-center items-center text-center rounded-t-xl p-5">
                 <h1 className="text-3xl font-medium rounded-b-xl pt-4">
                   Drink
                 </h1>
-                <p className="w-60 pt-2 text-xs font-light">
+                <p className="w-60 pt-2 text-xs font-light ">
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry.
                 </p>
               </div>
               <img src={drink} className="rounded-b-xl" />
             </Link>
-            <Link to="/shop" className="w-96 text-graynav border-none">
+            <Link
+              to="/shop"
+              className="w-96 text-graynav border-none hover:scale-105 duration-500"
+            >
               <div className="bg-white flex flex-col justify-center items-center text-center rounded-t-xl p-5">
                 <h1 className="text-3xl font-medium rounded-b-xl pt-4">Fun</h1>
                 <p className="w-60 pt-2 text-xs font-light">
@@ -142,7 +157,10 @@ export default function HomePage() {
               </div>
               <img src={fun} className="rounded-b-xl  h-96 w-96 " />
             </Link>
-            <Link to="/shop" className="w-96 text-graynav border-none">
+            <Link
+              to="/shop"
+              className="w-96 text-graynav border-none hover:scale-105 duration-500"
+            >
               <div className="bg-white flex flex-col justify-center items-center text-center rounded-t-xl p-5">
                 <h1 className="text-3xl font-medium rounded-b-xl pt-4">
                   Accessories

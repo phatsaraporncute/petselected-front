@@ -7,25 +7,26 @@ export default function NavbarAdmin() {
 
   const hdlLogout = () => {
     logout();
-    navigate("/homepage");
+    navigate("/");
   };
+
   return (
     <div className="navbar bg-graynav text-textnav">
       <div className="navbar-start">
-        <Link to="homepage" className="btn btn-ghost normal-case text-xl">
+        <Link to="/" className="btn btn-ghost normal-case text-xl">
           Pet Selected.
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link to="/shop">shop</Link>
+            <Link to="/admin/shop">shop</Link>
           </li>
           <li>
-            <Link to="/adminorder">order</Link>
+            <Link to="/admin/adminorder">order</Link>
           </li>
           <li>
-            <Link to="/adminproducts">products</Link>
+            <Link to="/admin/adminproducts">products</Link>
           </li>
         </ul>
       </div>
@@ -44,18 +45,17 @@ export default function NavbarAdmin() {
             <div className="flex flex-row text-graynav justify-center items-center gap-5 mb-3 mt-1">
               <i className="fa-regular fa-circle-user fa-2xl"></i>
               <div className="flex flex-col">
-                <h1>Name</h1>
-                <p>email@mail.com</p>
+                <h1>
+                  {user.firstName} {user.lastName}
+                </h1>
+                <p>{user.email}</p>
               </div>
             </div>
             <hr />
-            <li className="text-graynav mt-2">
+            <li className="text-graynav mt-2 " onClick={hdlLogout}>
               <a>
                 Sign out
-                <i
-                  className="fa-solid fa-arrow-right-from-bracket"
-                  onClick={hdlLogout}
-                ></i>
+                <i className="fa-solid fa-arrow-right-from-bracket"></i>
               </a>
             </li>
           </ul>

@@ -1,9 +1,30 @@
 import drinkShop from "../assets/Drink-shop.jpg";
-
+import CardFormUser from "../components/layouts/CardFormUser";
 import Fun from "../assets/Fun.jpeg";
-import drink from "../assets/Drink.jpeg";
+import { useEffect, useState } from "react";
+import { getAllProduct } from "../api/authApi";
+
+import { Link } from "react-router-dom";
 
 export default function Shop() {
+  const [product, setProduct] = useState([]);
+
+  const CardsUser = product.map((product) => (
+    <CardFormUser
+      key={product.id}
+      id={product.id}
+      productName={product.productName}
+      price={product.price}
+      description={product.description}
+    />
+  ));
+
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    getAllProduct(token).then((rs) => {
+      setProduct(rs.data);
+    });
+  }, []);
   return (
     <>
       <div>
@@ -108,9 +129,10 @@ export default function Shop() {
 
           {/* ProductCard */}
           <div className="w-full bg-white px-20 py-16 grid grid-flow-row grid-cols-3 gap-11 pb-16 ">
-            <div className="w-80 ">
-              <div className="w-80 relative">
-                <a href="#" className="">
+            {CardsUser}
+            {/* <div className="w-80 ">
+              <div className="w-80 relative hover:scale-105 duration-500 ">
+                <Link to="/product">
                   <img
                     alt="Art"
                     src={drink}
@@ -119,7 +141,7 @@ export default function Shop() {
                   <button className="absolute right-8 bottom-8 rounded-full bg-graynav text-textnav px-4 py-3 hover:bg-white hover:text-graynav hover:border hover:border-black">
                     Add to cart
                   </button>
-                </a>
+                </Link>
               </div>
               <h3 className="mt-8 text-2xl font-medium text-gray-900 sm:text-xl">
                 Lorem, ipsum dolor.
@@ -131,7 +153,7 @@ export default function Shop() {
               <p className="mt-6 max-w-sm text-gray-700 text-lg font-semibold">
                 2,300 THB
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

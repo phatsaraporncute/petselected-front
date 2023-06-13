@@ -91,7 +91,7 @@ export default function AdminEdit() {
                     <div className="w-[300px] h-[300px]">
                       <img
                         src={Drink}
-                        className="mask mask-square rounded-3xl"
+                        className="mask mask-square rounded-3xl  object-contain"
                       />
                       <p className="font-light text-graynav mb-3 mt-8">
                         Quantity :
@@ -162,21 +162,29 @@ export default function AdminEdit() {
                   </div>
 
                   {/* Cover img */}
-                  <div className=" flex flex-col justify-center items-center p-20  mt-16 w-[90%]">
+                  <div className=" flex flex-col justify-center items-center p-8  mt-16 w-[100%] pr-36">
                     <p className="w-full text-end pr-9 underline hover:text-graynav mb-3">
                       Edit
                     </p>
-                    <div className=" rounded-xl h-[350px] bg-gray-200 mb-20">
+                    <div className=" rounded-xl bg-gray-200 mb-20">
                       {/* <input type="file" /> */}
-                      <img src={ever01} alt="" className="rounded-xl mask" />
+                      <img
+                        src={ever01}
+                        alt=""
+                        className="rounded-xl mask object-contain h-[300px]"
+                      />
                     </div>
 
                     <p className="w-full text-end pr-9 underline hover:text-graynav mb-3">
                       Edit
                     </p>
-                    <div className=" rounded-xl h-[350px] bg-gray-200">
+                    <div className=" rounded-xl bg-gray-200">
                       {/* <input type="file" /> */}
-                      <img src={ever02} alt="" className="rounded-xl mask" />
+                      <img
+                        src={ever02}
+                        alt=""
+                        className="rounded-xl mask object-contain h-[300px]"
+                      />
                     </div>
 
                     {/* Button */}

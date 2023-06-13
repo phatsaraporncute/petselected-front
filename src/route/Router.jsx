@@ -13,6 +13,7 @@ import OrderPage from "../pages/OrderPage";
 import Product from "../pages/Product";
 import Register from "../pages/Register";
 import Shop from "../pages/Shop";
+import RedirectIfAdmin from "./RedirectIfAdmin";
 
 const router = createBrowserRouter([
   {
@@ -21,11 +22,12 @@ const router = createBrowserRouter([
       <>
         <NavbarAdmin />
         <Outlet />
+        <Footer />
       </>
     ),
     children: [
       {
-        path: "homepage",
+        index: true,
         element: <HomePage />,
       },
       {
@@ -54,15 +56,17 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <>
-        <Navbar />
-        <Outlet />
-        <Footer />
+        <RedirectIfAdmin>
+          <Navbar />
+          <Outlet />
+          <Footer />
+        </RedirectIfAdmin>
       </>
     ),
 
     children: [
       {
-        path: "homepage",
+        path: "/",
         element: <HomePage />,
       },
       {
