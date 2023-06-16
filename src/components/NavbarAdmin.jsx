@@ -35,7 +35,7 @@ export default function NavbarAdmin() {
 
         {/* Dropdown */}
         <div className="dropdown dropdown-end">
-          <label tabIndex={0} className=" m-1">
+          <label tabIndex={0} className=" m-1 mr-4">
             <i className="fa-solid fa-user text-lg cursor-pointer"></i>
           </label>
           <ul
@@ -46,9 +46,9 @@ export default function NavbarAdmin() {
               <i className="fa-regular fa-circle-user fa-2xl"></i>
               <div className="flex flex-col">
                 <h1>
-                  {user.firstName} {user.lastName}
+                  {user?.firstName} {user?.lastName}
                 </h1>
-                <p>{user.email}</p>
+                <p>{user?.email}</p>
               </div>
             </div>
             <hr />

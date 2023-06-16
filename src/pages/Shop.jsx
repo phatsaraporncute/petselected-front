@@ -16,6 +16,9 @@ export default function Shop() {
       productName={product.productName}
       price={product.price}
       description={product.description}
+      mainImg={product.ProductImages[0]?.mainImg}
+      descriptionImg={product.ProductImages[0]?.descriptionImg}
+      howtoImg={product.ProductImages[0]?.howtoImg}
     />
   ));
 
@@ -60,7 +63,7 @@ export default function Shop() {
                 <li>
                   <a
                     href=""
-                    className="block rounded-lg px-4 py-2 text-md font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
+                    className="block rounded-lg px-4 py-2 font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
                   >
                     All
                   </a>
@@ -68,7 +71,7 @@ export default function Shop() {
                 <li>
                   <a
                     href=""
-                    className="block rounded-lg px-4 py-2 text-md font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
+                    className="block rounded-lg px-4 py-2 font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
                   >
                     Clean
                   </a>
@@ -76,7 +79,7 @@ export default function Shop() {
                 <li>
                   <a
                     href=""
-                    className="block rounded-lg px-4 py-2 text-md font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
+                    className="block rounded-lg px-4 py-2  font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
                   >
                     Feed
                   </a>
@@ -84,7 +87,7 @@ export default function Shop() {
                 <li>
                   <a
                     href=""
-                    className="block rounded-lg px-4 py-2 text-md font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
+                    className="block rounded-lg px-4 py-2  font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
                   >
                     Drink
                   </a>
@@ -92,7 +95,7 @@ export default function Shop() {
                 <li>
                   <a
                     href=""
-                    className="block rounded-lg px-4 py-2 text-md font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
+                    className="block rounded-lg px-4 py-2 font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
                   >
                     Fun
                   </a>
@@ -100,7 +103,7 @@ export default function Shop() {
                 <li>
                   <a
                     href=""
-                    className="block rounded-lg px-4 py-2 text-md font-normal text-graynav hover:bg-gray-100 hover:text-gray-700 mb-8"
+                    className="block rounded-lg px-4 py-2 font-normal text-graynav hover:bg-gray-100 hover:text-gray-700 mb-8"
                   >
                     Accessories
                   </a>

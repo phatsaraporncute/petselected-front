@@ -1,9 +1,57 @@
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getProductById, updateProduct } from "../api/authApi";
+import { Link } from "react-router-dom";
+
 import Drink from "../assets/Drink.jpeg";
 
 import ever01 from "../assets/ever01.jpg";
 import ever02 from "../assets/ever02.jpg";
+import SidebarAdmin from "../components/SidebarAdmin";
 
 export default function AdminEdit() {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  console.log(id);
+  const [input, setInput] = useState({
+    productName: "",
+    description: "",
+    price: "",
+    size: "",
+    weight: "",
+    material: "",
+    quantity: "",
+    categoryId: "",
+  });
+
+  useEffect(() => {
+    getProductById(id).then((rs) => {
+      setInput(rs.data);
+    });
+  }, []);
+
+  const hdlChangeInput = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
+  const handleOnClickIncrease = () => {
+    setInput({ ...input, quantity: +input.quantity + 1 });
+  };
+
+  const handleOnClickDecrease = () => {
+    if (input.quantity > 0) {
+      setInput({ ...input, quantity: +input.quantity - 1 });
+    }
+  };
+
+  const hdlSubmit = (e) => {
+    e.preventDefault();
+    let token = localStorage.getItem("token");
+    updateProduct(id, input, token).then((rs) => {
+      navigate("/admin/adminproducts");
+    });
+  };
+
   return (
     <div className="bg-white">
       <div className="w-full">
@@ -15,67 +63,7 @@ export default function AdminEdit() {
           {/* Sidebar */}
           <div className="flex flex-row">
             <div className="flex flex-col justify-between border-none w-72 pt-3">
-              <div className=" py-2 text-black">
-                <ul className="mt-6 space-y-1">
-                  <li className="px-4 py-2 text-lg font-medium border-b border-graynav mb-3 pb-4">
-                    COLLECTION
-                  </li>
-                  <li>
-                    <a
-                      href=""
-                      className="block rounded-lg px-4 py-2 text-md font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
-                    >
-                      All
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href=""
-                      className="block rounded-lg px-4 py-2 text-md font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
-                    >
-                      Clean
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href=""
-                      className="block rounded-lg px-4 py-2 text-md font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
-                    >
-                      Feed
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href=""
-                      className="block rounded-lg px-4 py-2 text-md font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
-                    >
-                      Drink
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href=""
-                      className="block rounded-lg px-4 py-2 text-md font-normal text-graynav hover:bg-gray-100 hover:text-gray-700"
-                    >
-                      Fun
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href=""
-                      className="block rounded-lg px-4 py-2 text-md font-normal text-graynav hover:bg-gray-100 hover:text-gray-700 mb-8"
-                    >
-                      Accessories
-                    </a>
-                  </li>
-
-                  {/* Add product */}
-
-                  <li className="px-4 py-2 text-lg font-medium border-t border-graynav mb-3 pb-4 hover:underline cursor-pointer pt-6">
-                    + Add product
-                  </li>
-                </ul>
-              </div>
+              <SidebarAdmin />
             </div>
 
             {/* Edit Side */}
@@ -86,7 +74,7 @@ export default function AdminEdit() {
 
               <div className="flex flex-row justify-center gap-32">
                 {/* Left */}
-                <form className="text-graynav ">
+                <form className="text-graynav " onSubmit={hdlSubmit}>
                   <div className="flex flex-row justify-center gap-20 w-[90%]">
                     <div className="w-[300px] h-[300px]">
                       <img
@@ -99,6 +87,7 @@ export default function AdminEdit() {
                       <div className="flex items-center border w-36 border-gray-400 rounded-full">
                         <button
                           type="button"
+                          onClick={handleOnClickDecrease}
                           className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
                         >
                           &minus;
@@ -107,12 +96,15 @@ export default function AdminEdit() {
                         <input
                           type="number"
                           id="Quantity"
-                          value="1"
+                          name="quantity"
+                          onChange={hdlChangeInput}
+                          value={input?.quantity}
                           className="h-10 w-16 border-transparent text-center bg-transparent text-graynav [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
                         />
 
                         <button
                           type="button"
+                          onClick={handleOnClickIncrease}
                           className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
                         >
                           +
@@ -126,38 +118,63 @@ export default function AdminEdit() {
                         type="text"
                         placeholder="Product Name"
                         className="block rounded-lg border mb-5 border-gray-400 font-light py-3.5 focus:ring-1 w-full  bg-white text-sm pl-6 "
+                        name="productName"
+                        onChange={hdlChangeInput}
+                        value={input?.productName}
                       />
-                      <input
-                        type="text"
+                      <textarea
+                        className="block rounded-lg  border mb-5 border-gray-400 font-light py-3.5 focus:ring-1 w-full  bg-white text-sm pl-6 "
+                        rows="5"
                         placeholder="Product description..."
-                        className="block rounded-lg border mb-5 border-gray-400 font-light py-3.5 focus:ring-1 w-full  bg-white text-sm pl-6 "
+                        name="description"
+                        onChange={hdlChangeInput}
+                        value={input?.description}
                       />
                       <input
                         type="text"
                         placeholder="Product size"
                         className="block rounded-lg border mb-5 border-gray-400 font-light py-3.5 focus:ring-1 w-full  bg-white text-sm pl-6 "
+                        name="size"
+                        onChange={hdlChangeInput}
+                        value={input?.size}
                       />
                       <input
                         type="text"
                         placeholder="Product weight"
                         className="block rounded-lg border mb-5 border-gray-400 font-light py-3.5 focus:ring-1 w-full  bg-white text-sm pl-6 "
+                        name="weight"
+                        onChange={hdlChangeInput}
+                        value={input?.weight}
                       />
                       <input
                         type="text"
                         placeholder="Product material"
                         className="block rounded-lg border mb-5 border-gray-400 font-light py-3.5 focus:ring-1 w-full  bg-white text-sm pl-6 "
+                        name="material"
+                        onChange={hdlChangeInput}
+                        value={input?.material}
                       />
                       <select
                         id="status"
                         name="status"
-                        className=" block rounded-lg border border-gray-400 font-light py-3.5 focus:ring-1 w-full  bg-white text-sm pl-6"
+                        onChange={hdlChangeInput}
+                        value={input?.categoryId}
+                        className=" block rounded-lg border mb-5 border-gray-400 font-light py-3.5 focus:ring-1 w-full  bg-white text-sm pl-6"
                       >
-                        <option value="clean">Clean</option>
-                        <option value="feed">Feed</option>
-                        <option value="drink">Drink</option>
-                        <option value="fun">Fun</option>
-                        <option value="accessories">Accessories</option>
+                        <option value="1">Clean</option>
+                        <option value="2">Feed</option>
+                        <option value="3">Drink</option>
+                        <option value="4">Fun</option>
+                        <option value="5">Accessories</option>
                       </select>
+                      <input
+                        type="text"
+                        placeholder="Price"
+                        name="price"
+                        onChange={hdlChangeInput}
+                        value={input?.price}
+                        className="block rounded-lg border mb-5 border-gray-400 font-light py-3.5 focus:ring-1 w-full  bg-white text-sm pl-6 "
+                      />
                     </div>
                   </div>
 
@@ -189,12 +206,17 @@ export default function AdminEdit() {
 
                     {/* Button */}
                     <div className="flex- flex-row mt-12 ">
-                      <button className="mt-10 rounded-full text-graynav bg-white border border-black w-32 h-11 mr-5">
+                      <button
+                        type="submit"
+                        className="mt-10 rounded-full text-graynav bg-white border border-black w-32 h-11 mr-5"
+                      >
                         Save
                       </button>
-                      <button className="mt-10 rounded-full text-white bg-graynav border border-graynav w-32 h-11 ">
-                        Cancel
-                      </button>
+                      <Link to="/admin/adminproducts">
+                        <button className="mt-10 rounded-full text-white bg-graynav border border-graynav w-32 h-11 ">
+                          Cancel
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 </form>

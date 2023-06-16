@@ -1,5 +1,3 @@
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import Qrcode from "../assets/QRcode.png";
 
 import Drink from "../assets/Drink.jpeg";

@@ -29,7 +29,23 @@ export const addProduct = (input, token) => {
 }
 
 export const getAllProduct = (token) => {
-    return authApi.get('/admin/product/', addToken(token))
+    return authApi.get('/guest/', addToken(token))
+}
+
+export const getProductById = (id) => {
+    return authApi.get(`/guest/${id}`)
 }
 
 
+export const deleteProduct = (id, token) => {
+    return authApi.delete(`/admin/product/${id}`, addToken(token))
+}
+
+
+export const updateProduct = (id, input, token) => {
+    return authApi.put(`/admin/product/${id}`, input, addToken(token))
+}
+
+export const addImage = (productId, input, token) => {
+    return authApi.patch(`/admin/product/image/${productId}`, input, addToken(token))
+}

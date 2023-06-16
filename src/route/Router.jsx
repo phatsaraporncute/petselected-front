@@ -43,7 +43,7 @@ const router = createBrowserRouter([
         element: <AdminProducts />,
       },
       {
-        path: "adminedit",
+        path: "adminedit/:id",
         element: <AdminEdit />,
       },
       {
@@ -82,7 +82,7 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "product",
+        path: "product/:id",
         element: <Product />,
       },
       {
