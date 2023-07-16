@@ -2,12 +2,14 @@ import drinkShop from "../assets/Drink-shop.jpg";
 import CardFormUser from "../components/layouts/CardFormUser";
 import Fun from "../assets/Fun.jpeg";
 import { useEffect, useState } from "react";
-import { getAllProduct } from "../api/authApi";
+import { getAllProduct, updateCart } from "../api/authApi";
 
 import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Shop() {
   const [product, setProduct] = useState([]);
+  const { user } = useAuth();
 
   const CardsUser = product.map((product) => (
     <CardFormUser
@@ -15,10 +17,12 @@ export default function Shop() {
       id={product.id}
       productName={product.productName}
       price={product.price}
+      quantity={product.quantity}
       description={product.description}
       mainImg={product.ProductImages[0]?.mainImg}
       descriptionImg={product.ProductImages[0]?.descriptionImg}
       howtoImg={product.ProductImages[0]?.howtoImg}
+      userId={user?.id}
     />
   ));
 
@@ -28,18 +32,19 @@ export default function Shop() {
       setProduct(rs.data);
     });
   }, []);
+
   return (
     <>
       <div>
         {/* Preview */}
         <div>
           <div className="flex flex-row">
-            <div className="w-[800px] bg-gray-100 flex flex-col justify-center items-center">
+            <div className="w-[70%] bg-gray-100 flex flex-col justify-center items-center">
               <div className="w-[450px] pl-6">
                 <h1 className="text-graynav mb-7 font-semibold text-4xl">
                   DRINK
                 </h1>
-                <p className="text-graynav font-normal text-lg">
+                <p className="text-graynav font-normal text-lg ">
                   First choice for drinking water: Unlock more delicious flavors
                   for the furry diet.
                 </p>
@@ -47,7 +52,7 @@ export default function Shop() {
             </div>
             <img
               src={drinkShop}
-              className="block object-cover h-[534.97px] w-[1000px]"
+              className="block object-cover h-[534.97px] w-full"
             />
           </div>
         </div>

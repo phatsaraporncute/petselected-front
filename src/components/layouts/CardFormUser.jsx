@@ -1,5 +1,8 @@
-import drink from "../../assets/Drink.jpeg";
 import { Link } from "react-router-dom";
+
+import { addCart, updateCart, updateCart1 } from "../../api/authApi";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function CardFormUser({
   id,
@@ -7,7 +10,27 @@ export default function CardFormUser({
   price,
   description,
   mainImg,
+  userId,
+  quantity,
 }) {
+  const navigate = useNavigate();
+  const [addOneQuantity, setAddOneQuantity] = useState(1);
+  const [input, setInput] = useState({
+    quantity: 1,
+    price: price,
+    productId: id,
+    userId: userId,
+  });
+
+  const hdlSubmit = (e) => {
+    e.preventDefault();
+    let token = localStorage.getItem("token");
+
+    updateCart1(id, input, token).then((rs) => {
+      console.log(rs);
+    });
+  };
+
   return (
     <>
       <div className="w-80 ">
@@ -18,7 +41,10 @@ export default function CardFormUser({
               src={mainImg}
               className=" mask mask-square h-80 w-80 object-cover border border-gray-300 rounded-2xl"
             />
-            <button className="absolute right-8 bottom-8 rounded-full bg-graynav text-textnav px-4 py-3 hover:bg-white hover:text-graynav hover:border hover:border-black">
+            <button
+              className="absolute right-8 bottom-8 rounded-full bg-graynav text-textnav px-4 py-3 hover:bg-white hover:text-graynav hover:border hover:border-black"
+              onClick={hdlSubmit}
+            >
               Add to cart
             </button>
           </Link>

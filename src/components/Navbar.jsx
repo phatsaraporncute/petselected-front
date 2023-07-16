@@ -1,16 +1,80 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-
-import Drink from "../assets/Drink.jpeg";
+import CartCard from "./layouts/CartCard";
+import { useEffect, useState } from "react";
+import { createOrder, getCart, deleteCart } from "../api/authApi";
 
 export default function Navbar() {
+  const [products, setProducts] = useState([]);
+  const [totalPrice, setTotal] = useState(0);
+  const [render, setRender] = useState(false);
+
+  // const [checkout, setCheckout] = useState([]);
+
+  // console.log("products", products);
+
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const [input, setInput] = useState({});
+
+  console.log(user);
+  const [open, setOpen] = useState(false);
 
   const hdlLogout = () => {
     logout();
     navigate("/");
   };
+
+  const hdlSubmit = (e) => {
+    e.preventDefault();
+    let token = localStorage.getItem("token");
+    console.log({ input, totalPrice }, token);
+    createOrder({ input, totalPrice }, token)
+      .then((rs) => {
+        setInput(rs.data);
+        // console.log(user);
+      })
+      .then(() => {
+        deleteCart(token);
+        setOpen(false);
+        navigate("/order");
+      });
+  };
+
+  // useEffect(() => {
+  //   async function fetchCart() {
+  //     let token = localStorage.getItem("token");
+  //     try {
+  //       const res = await getCart(token, user.id);
+  //       setProducts(res.data.carts);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  //   if (user) {
+  //     fetchCart();
+  //   }
+  // }, [user]);
+
+  useEffect(() => {
+    async function fetchCart() {
+      let token = localStorage.getItem("token");
+      try {
+        const res = await getCart(token, user.id);
+        setProducts(res.data.carts);
+        const totalPrice = res.data.carts?.reduce((sum, el) => {
+          return (sum += el.Product.price * el.quantity);
+        }, 0);
+        setTotal(totalPrice);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if (user) {
+      console.log("runnnnn");
+      fetchCart().then(() => setOpen(false));
+    }
+  }, [user, open, render]);
 
   return (
     <>
@@ -97,7 +161,10 @@ export default function Navbar() {
             {/* Cart */}
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="m-1">
-                <i className="fa-solid fa-cart-shopping text-lg pr-4 cursor-pointer"></i>
+                <i
+                  className="fa-solid fa-cart-shopping text-lg pr-4 cursor-pointer"
+                  onClick={() => setOpen(true)}
+                ></i>
               </label>
               <ul
                 tabIndex={0}
@@ -112,7 +179,25 @@ export default function Navbar() {
                   <div className="flex justify-center">
                     <div className=" bg-transparent rounded-3xl flex flex-col justify-between">
                       {/* Product */}
-                      <div className="overflow-x-auto px-11 mb-1 ">
+                      {products?.map((el, idx) => (
+                        // console.log(el))
+                        <CartCard
+                          cartId={el.id}
+                          key={idx}
+                          productName={el.Product.productName}
+                          price={el.Product.price}
+                          quantity={el.quantity}
+                          userId={el.User.id}
+                          productId={el.productId}
+                          mainImg={el.Product.ProductImages[0].mainImg}
+                          render={render}
+                          setRender={setRender}
+                          totalPrice={totalPrice}
+                          setTotal={setTotal}
+                        />
+                      ))}
+
+                      {/* <div className="overflow-x-auto px-11 mb-1 ">
                         <div className="flex items-center space-x-3 rounded-md mt-2 mb-4">
                           <div className="avatar">
                             <div className="mask mask-square w-20 h-20 rounded-md border border-gray-200">
@@ -136,7 +221,7 @@ export default function Navbar() {
                             </p>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
 
                       <div className="flex flex-col justify-center items-center">
                         <div className="flex justify-between border-b border-gray-300 w-[528px] pb-4">
@@ -144,12 +229,14 @@ export default function Navbar() {
                             Total
                           </p>
                           <p className="text-xl font-medium text-graynav">
-                            4,500 THB
+                            {totalPrice} THB
                           </p>
                         </div>
+
                         <button
                           className=" mt-5 mb-6 rounded-full text-white w-[528px] p-3.5 bg-graynav border border-graynav hover:bg-white hover:text-graynav hover:border hover:border-graynav "
                           type="submit"
+                          onClick={hdlSubmit}
                         >
                           CHECKOUT
                         </button>

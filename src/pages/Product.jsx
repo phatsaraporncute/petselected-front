@@ -1,24 +1,25 @@
-import Drink from "../assets/Drink.jpeg";
-import ever01 from "../assets/ever01.jpg";
-import ever02 from "../assets/ever02.jpg";
-import { getProductById } from "../api/authApi";
-import { useParams } from "react-router-dom";
+import { getProductById, updateCart } from "../api/authApi";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Product() {
   const { id } = useParams();
+  const { user } = useAuth();
   const [product, setProduct] = useState([]);
+  const navigate = useNavigate();
 
   const [mainImg, setMainImg] = useState(null);
   const [descriptionImg, setDescriptionImg] = useState(null);
   const [howtoImg, setHowtoImg] = useState(null);
 
   const [input, setInput] = useState({
-    quantity: "1",
+    addQuantity: 1,
+    productId: id,
   });
 
   const handleOnClickIncrease = () => {
-    setInput({ ...input, quantity: +input.quantity + 1 });
+    setInput({ ...input, addQuantity: +input.addQuantity + 1 });
   };
 
   const hdlChangeInput = (e) => {
@@ -26,9 +27,15 @@ export default function Product() {
   };
 
   const handleOnClickDecrease = () => {
-    if (input.quantity > 0) {
-      setInput({ ...input, quantity: +input.quantity - 1 });
+    if (input.addQuantity > 0) {
+      setInput({ ...input, addQuantity: +input.addQuantity - 1 });
     }
+  };
+
+  const hdlSubmit = (e) => {
+    e.preventDefault();
+    let token = localStorage.getItem("token");
+    updateCart(input, token).then((rs) => {});
   };
 
   useEffect(() => {
@@ -97,9 +104,9 @@ export default function Product() {
                   <input
                     type="number"
                     id="Quantity"
-                    name="quantity"
+                    name="addQuantity"
                     onChange={hdlChangeInput}
-                    value={input.quantity}
+                    value={input.addQuantity}
                     className="h-10 w-16 border-transparent text-center bg-transparent text-graynav [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
                   />
 
@@ -112,7 +119,10 @@ export default function Product() {
                   </button>
                 </div>
 
-                <button className=" rounded-full w-36 bg-graynav text-white px-4 py-3 hover:bg-gray-800 ">
+                <button
+                  className=" rounded-full w-36 bg-graynav text-white px-4 py-3 hover:bg-gray-800 "
+                  onClick={hdlSubmit}
+                >
                   Add to cart
                 </button>
               </div>
